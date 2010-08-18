@@ -1,6 +1,5 @@
 import os,re
 
-config_file_path = os.path.join(os.path.expanduser('~'),'fb.ini')
 
 class ConfigFile:
 	def __init__(self,filepath):
@@ -25,8 +24,19 @@ class ConfigFile:
 			f.write(key+'='+self.__dict__[key]+'\n')
 		f.close()
 
+class ParseFacebookUrl:
+	def __init__(self,uri):
+		urilist = uri.split('?')
+		self.url = urilist[0]
+		queries = urilist[1].split('&')
+		self.query = {}
+		for q in queries:
+			pair = q.split('=')
+			if len(pair) == 2:
+				self.query[pair[0]] = pair[1]		
 
 if __name__ == '__main__':
+	config_file_path = os.path.join(os.path.expanduser('~'),'fb.ini')
 	cf = ConfigFile(config_file_path)
 	cf.test = '100'
 	cf.test2 = '200'
